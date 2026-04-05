@@ -70,7 +70,7 @@ export default function ImpostorGame() {
       {gameState.phase === "setup" && (
         <Link
           href="/"
-          className="mb-6 text-gray-500 hover:text-gray-300 text-sm transition-colors"
+          className="mb-6 text-[#6B7280] hover:text-[#1A1A2E] text-sm transition-colors"
         >
           ← Back to Games
         </Link>

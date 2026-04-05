@@ -36,29 +36,29 @@ export default function WordReveal({
 
   return (
     <div className="flex flex-col items-center gap-6 w-full max-w-md mx-auto text-center">
-      <div className="text-gray-500 text-sm">
+      <div className="text-[#6B7280] text-sm">
         Player {currentPlayerIndex + 1} of {players.length}
       </div>
 
-      <h2 className="text-2xl font-bold text-white">{player.name}</h2>
+      <h2 className="text-2xl font-bold text-[#1A1A2E]">{player.name}</h2>
 
       {!revealed ? (
         <>
-          <p className="text-gray-400">
-            Make sure only <span className="text-white font-semibold">{player.name}</span> can see the screen.
+          <p className="text-[#6B7280]">
+            Make sure only <span className="text-[#1A1A2E] font-semibold">{player.name}</span> can see the screen.
           </p>
           <button
             onClick={handleReveal}
-            className="w-full py-6 bg-gray-800 border-2 border-gray-600 hover:border-gold rounded-2xl text-gray-300 hover:text-white text-lg transition-colors"
+            className="w-full py-6 bg-[#F7F7F8] border-2 border-[#E5E7EB] hover:border-gold rounded-2xl text-[#6B7280] hover:text-[#1A1A2E] text-lg transition-colors"
           >
             👁️ Tap to reveal your word
           </button>
         </>
       ) : (
         <>
-          <div className="w-full py-8 px-6 rounded-2xl space-y-4 border-2 border-gray-700 bg-gray-800/50">
-            <div className="text-gray-400 text-sm">
-              Topic: <span className="text-gray-200">{topic.emoji} {topic.name}</span>
+          <div className="w-full py-8 px-6 rounded-2xl space-y-4 border-2 border-[#E5E7EB] bg-[#F7F7F8]">
+            <div className="text-[#6B7280] text-sm">
+              Topic: <span className="text-[#1A1A2E]">{topic.emoji} {topic.name}</span>
             </div>
             {player.isImpostor ? (
               <div className="space-y-2">
@@ -66,14 +66,14 @@ export default function WordReveal({
                 <div className="text-gold text-2xl font-bold">
                   YOU ARE THE IMPOSTOR
                 </div>
-                <p className="text-gray-500 text-sm">
+                <p className="text-[#6B7280] text-sm">
                   You don&apos;t know the word. Blend in!
                 </p>
               </div>
             ) : (
               <div className="space-y-2">
-                <div className="text-gray-400 text-sm">Your word is:</div>
-                <div className="text-3xl font-bold text-emerald-400">
+                <div className="text-[#6B7280] text-sm">Your word is:</div>
+                <div className="text-3xl font-bold text-[#10B981]">
                   {player.word}
                 </div>
               </div>
@@ -82,7 +82,7 @@ export default function WordReveal({
 
           <button
             onClick={handleNext}
-            className="w-full py-4 bg-gold hover:bg-gold-dark text-black font-bold rounded-xl transition-colors"
+            className="w-full py-4 bg-gold hover:bg-gold-dark text-white font-bold rounded-xl transition-colors"
           >
             {isLast ? "🚀 Start Discussion" : "✓ Got it — Next Player"}
           </button>
@@ -96,10 +96,10 @@ export default function WordReveal({
             key={i}
             className={`w-2.5 h-2.5 rounded-full transition-colors ${
               i < currentPlayerIndex
-                ? "bg-emerald-500"
+                ? "bg-[#10B981]"
                 : i === currentPlayerIndex
                 ? "bg-gold"
-                : "bg-gray-700"
+                : "bg-[#E5E7EB]"
             }`}
           />
         ))}

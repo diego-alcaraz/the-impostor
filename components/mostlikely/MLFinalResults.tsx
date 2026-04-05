@@ -17,26 +17,25 @@ export default function MLFinalResults({
   const winner = sorted[0];
   const maxScore = winner.score;
 
-  // Medals for top 3
   const medals = ["🥇", "🥈", "🥉"];
 
   return (
     <div className="flex flex-col items-center gap-6 w-full max-w-md mx-auto text-center">
       <div className="text-5xl">🏆</div>
-      <h2 className="text-3xl font-bold text-gold">Final Results!</h2>
+      <h2 className="text-3xl font-bold text-gold-dark">Final Results!</h2>
 
       {/* Winner banner */}
       <div className="w-full py-6 px-6 rounded-2xl border-2 border-gold/40 bg-gold/10 space-y-2">
-        <div className="text-lg text-gray-400">The group decided...</div>
-        <div className="text-3xl font-bold text-white">{winner.name}</div>
-        <div className="text-gold">
+        <div className="text-lg text-[#6B7280]">The group decided...</div>
+        <div className="text-3xl font-bold text-[#1A1A2E]">{winner.name}</div>
+        <div className="text-gold-dark">
           is the Most Likely To everything! ({maxScore} points)
         </div>
       </div>
 
       {/* Scoreboard */}
       <div className="w-full space-y-2">
-        <h3 className="text-gray-400 text-sm font-semibold">Scoreboard</h3>
+        <h3 className="text-[#6B7280] text-sm font-semibold">Scoreboard</h3>
         {sorted.map((p, i) => (
           <div
             key={p.id}
@@ -44,25 +43,25 @@ export default function MLFinalResults({
               i === 0
                 ? "bg-gold/15 border-2 border-gold/40"
                 : i === 1
-                ? "bg-gray-800/80 border border-gray-600"
+                ? "bg-[#F7F7F8] border border-[#D1D5DB]"
                 : i === 2
-                ? "bg-gray-800/60 border border-gray-700"
-                : "bg-gray-800/40 border border-gray-800"
+                ? "bg-[#F7F7F8] border border-[#E5E7EB]"
+                : "bg-white border border-[#E5E7EB]"
             }`}
           >
             <div className="flex items-center gap-3">
               <span className="text-xl w-8">
-                {i < 3 ? medals[i] : <span className="text-gray-600 text-sm font-mono">{i + 1}.</span>}
+                {i < 3 ? medals[i] : <span className="text-[#9CA3AF] text-sm font-mono">{i + 1}.</span>}
               </span>
-              <span className={`font-semibold ${i === 0 ? "text-gold" : "text-white"}`}>
+              <span className={`font-semibold ${i === 0 ? "text-gold-dark" : "text-[#1A1A2E]"}`}>
                 {p.name}
               </span>
             </div>
             <div className="flex items-center gap-2">
-              <span className={`font-bold text-lg ${i === 0 ? "text-gold" : "text-gray-300"}`}>
+              <span className={`font-bold text-lg ${i === 0 ? "text-gold-dark" : "text-[#1A1A2E]"}`}>
                 {p.score}
               </span>
-              <span className="text-gray-600 text-sm">pts</span>
+              <span className="text-[#9CA3AF] text-sm">pts</span>
             </div>
           </div>
         ))}
@@ -70,7 +69,7 @@ export default function MLFinalResults({
 
       {/* Round recap */}
       <details className="w-full text-left">
-        <summary className="text-gray-600 text-sm cursor-pointer hover:text-gray-400 transition-colors">
+        <summary className="text-[#9CA3AF] text-sm cursor-pointer hover:text-[#6B7280] transition-colors">
           Round-by-round recap
         </summary>
         <div className="mt-3 space-y-2">
@@ -81,12 +80,12 @@ export default function MLFinalResults({
             return (
               <div
                 key={i}
-                className="flex items-start justify-between px-3 py-2 rounded-lg bg-gray-800/30 text-sm"
+                className="flex items-start justify-between px-3 py-2 rounded-lg bg-[#F7F7F8] text-sm"
               >
-                <span className="text-gray-500 flex-1">
+                <span className="text-[#6B7280] flex-1">
                   R{i + 1}: {r.prompt}
                 </span>
-                <span className="text-gold ml-3 whitespace-nowrap">
+                <span className="text-gold-dark ml-3 whitespace-nowrap">
                   {r.isTie ? "Tie" : winnerPlayer?.name || "—"}
                 </span>
               </div>
@@ -98,7 +97,7 @@ export default function MLFinalResults({
       {/* Play Again */}
       <button
         onClick={onPlayAgain}
-        className="w-full py-4 bg-gold hover:bg-gold-dark text-black font-bold text-lg rounded-xl transition-colors shadow-lg shadow-gold-dark/30"
+        className="w-full py-4 bg-gold hover:bg-gold-dark text-white font-bold text-lg rounded-xl transition-colors shadow-lg shadow-gold-dark/30"
       >
         🔄 Play Again
       </button>

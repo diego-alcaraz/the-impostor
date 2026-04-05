@@ -48,36 +48,36 @@ export default function DiscussionPhase({
 
   return (
     <div className="flex flex-col items-center gap-6 w-full max-w-md mx-auto text-center">
-      <div className="text-gray-500 text-sm">Round {round}</div>
+      <div className="text-[#6B7280] text-sm">Round {round}</div>
 
-      <h2 className="text-xl font-bold text-gray-200">
+      <h2 className="text-xl font-bold text-[#1A1A2E]">
         {topic.emoji} Topic: {topic.name}
       </h2>
 
-      <p className="text-gray-400 text-sm">
-        Each player gives a <span className="text-white">one-word clue</span>{" "}
+      <p className="text-[#6B7280] text-sm">
+        Each player gives a <span className="text-[#1A1A2E] font-semibold">one-word clue</span>{" "}
         about the secret word. The impostor must bluff!
       </p>
 
       {/* Current speaker */}
-      <div className="w-full py-6 px-6 rounded-2xl border-2 border-gray-700 bg-gray-800/50 space-y-3">
-        <div className="text-gray-500 text-sm">
+      <div className="w-full py-6 px-6 rounded-2xl border-2 border-[#E5E7EB] bg-[#F7F7F8] space-y-3">
+        <div className="text-[#6B7280] text-sm">
           Turn {currentTurn + 1} of {activePlayers.length}
         </div>
-        <div className="text-2xl font-bold text-white">
+        <div className="text-2xl font-bold text-[#1A1A2E]">
           {activePlayers[currentTurn].name}
         </div>
-        <div className="text-gray-400">Give your clue!</div>
+        <div className="text-[#6B7280]">Give your clue!</div>
 
         {/* Timer */}
         <div className="flex flex-col items-center gap-2">
           <div
             className={`text-5xl font-mono font-bold ${
               timerSeconds <= 5 && timerRunning
-                ? "text-gold animate-pulse"
+                ? "text-red-500 animate-pulse"
                 : timerSeconds === 0
-                ? "text-gold"
-                : "text-white"
+                ? "text-red-500"
+                : "text-[#1A1A2E]"
             }`}
           >
             {timerSeconds}s
@@ -86,7 +86,7 @@ export default function DiscussionPhase({
             {!timerRunning && timerSeconds > 0 && (
               <button
                 onClick={() => setTimerRunning(true)}
-                className="px-4 py-1.5 bg-emerald-600 hover:bg-emerald-700 rounded-lg text-sm text-white transition-colors"
+                className="px-4 py-1.5 bg-[#10B981] hover:bg-[#059669] rounded-lg text-sm text-white transition-colors"
               >
                 ▶ Start Timer
               </button>
@@ -94,7 +94,7 @@ export default function DiscussionPhase({
             {timerRunning && (
               <button
                 onClick={() => setTimerRunning(false)}
-                className="px-4 py-1.5 bg-gray-600 hover:bg-gray-700 rounded-lg text-sm text-white transition-colors"
+                className="px-4 py-1.5 bg-[#6B7280] hover:bg-[#4B5563] rounded-lg text-sm text-white transition-colors"
               >
                 ⏸ Pause
               </button>
@@ -104,7 +104,7 @@ export default function DiscussionPhase({
                 setTimerSeconds(30);
                 setTimerRunning(false);
               }}
-              className="px-4 py-1.5 bg-gray-700 hover:bg-gray-600 rounded-lg text-sm text-gray-300 transition-colors"
+              className="px-4 py-1.5 bg-[#F7F7F8] border border-[#E5E7EB] hover:bg-[#E5E7EB] rounded-lg text-sm text-[#6B7280] transition-colors"
             >
               ↺ Reset
             </button>
@@ -114,17 +114,17 @@ export default function DiscussionPhase({
 
       {/* Player order */}
       <div className="w-full space-y-1">
-        <div className="text-gray-500 text-xs text-left">Turn order:</div>
+        <div className="text-[#9CA3AF] text-xs text-left">Turn order:</div>
         <div className="flex flex-wrap gap-2">
           {activePlayers.map((p, i) => (
             <span
               key={p.id}
               className={`px-3 py-1 rounded-full text-sm ${
                 i < currentTurn
-                  ? "bg-gray-800 text-gray-600 line-through"
+                  ? "bg-[#F7F7F8] text-[#9CA3AF] line-through"
                   : i === currentTurn
                   ? "bg-gold/20 text-gold border border-gold"
-                  : "bg-gray-800 text-gray-400"
+                  : "bg-[#F7F7F8] text-[#6B7280]"
               }`}
             >
               {p.name}
@@ -137,7 +137,7 @@ export default function DiscussionPhase({
       {!isLastTurn ? (
         <button
           onClick={nextTurn}
-          className="w-full py-3 bg-gray-700 hover:bg-gray-600 text-white font-semibold rounded-xl transition-colors"
+          className="w-full py-3 bg-[#F7F7F8] border border-[#E5E7EB] hover:bg-[#E5E7EB] text-[#1A1A2E] font-semibold rounded-xl transition-colors"
         >
           Next Player →
         </button>
@@ -145,7 +145,7 @@ export default function DiscussionPhase({
 
       <button
         onClick={onStartVoting}
-        className="w-full py-4 bg-gold hover:bg-gold-dark text-black font-bold rounded-xl transition-colors shadow-lg shadow-gold-dark/30"
+        className="w-full py-4 bg-gold hover:bg-gold-dark text-white font-bold rounded-xl transition-colors shadow-lg shadow-gold-dark/30"
       >
         🗳️ Start Voting
       </button>

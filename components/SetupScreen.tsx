@@ -66,17 +66,17 @@ export default function SetupScreen({ onStartGame }: SetupScreenProps) {
         <h1 className="text-4xl font-bold text-gold mb-2 tracking-wider">
           THE IMPOSTOR
         </h1>
-        <p className="text-gray-400 text-sm">
+        <p className="text-[#6B7280] text-sm">
           Find the impostor among you... or bluff your way out.
         </p>
       </div>
 
       {/* Players */}
       <div className="w-full space-y-3">
-        <h2 className="text-lg font-semibold text-gray-200">Players</h2>
+        <h2 className="text-lg font-semibold text-[#1A1A2E]">Players</h2>
         {playerNames.map((name, i) => (
           <div key={i} className="flex gap-2 items-center">
-            <span className="text-gray-500 text-sm w-6 text-right">
+            <span className="text-[#6B7280] text-sm w-6 text-right">
               {i + 1}.
             </span>
             <input
@@ -85,12 +85,12 @@ export default function SetupScreen({ onStartGame }: SetupScreenProps) {
               onChange={(e) => updateName(i, e.target.value)}
               placeholder={`Player ${i + 1}`}
               maxLength={20}
-              className="flex-1 bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-white placeholder-gray-600 focus:outline-none focus:border-gold transition-colors"
+              className="flex-1 bg-[#F7F7F8] border border-[#E5E7EB] rounded-lg px-3 py-2 text-[#1A1A2E] placeholder-[#9CA3AF] focus:outline-none focus:border-gold transition-colors"
             />
             {playerNames.length > 3 && (
               <button
                 onClick={() => removePlayer(i)}
-                className="text-gray-600 hover:text-red-500 transition-colors text-xl leading-none"
+                className="text-[#9CA3AF] hover:text-red-500 transition-colors text-xl leading-none"
               >
                 ×
               </button>
@@ -100,7 +100,7 @@ export default function SetupScreen({ onStartGame }: SetupScreenProps) {
         {playerNames.length < 20 && (
           <button
             onClick={addPlayer}
-            className="w-full py-2 border border-dashed border-gray-700 rounded-lg text-gray-500 hover:border-gray-500 hover:text-gray-300 transition-colors"
+            className="w-full py-2 border border-dashed border-[#E5E7EB] rounded-lg text-[#6B7280] hover:border-[#B8860B] hover:text-[#B8860B] transition-colors"
           >
             + Add Player
           </button>
@@ -109,7 +109,7 @@ export default function SetupScreen({ onStartGame }: SetupScreenProps) {
 
       {/* Impostor Count */}
       <div className="w-full space-y-2">
-        <h2 className="text-lg font-semibold text-gray-200">
+        <h2 className="text-lg font-semibold text-[#1A1A2E]">
           Number of Impostors
         </h2>
         <div className="flex gap-2 flex-wrap">
@@ -119,8 +119,8 @@ export default function SetupScreen({ onStartGame }: SetupScreenProps) {
               onClick={() => setImpostorCount(n)}
               className={`w-12 h-12 rounded-lg font-bold transition-colors ${
                 impostorCount === n
-                  ? "bg-gold text-black"
-                  : "bg-gray-800 text-gray-400 border border-gray-700 hover:border-gray-500"
+                  ? "bg-gold text-white"
+                  : "bg-[#F7F7F8] text-[#6B7280] border border-[#E5E7EB] hover:border-[#B8860B]"
               }`}
             >
               {n}
@@ -131,14 +131,14 @@ export default function SetupScreen({ onStartGame }: SetupScreenProps) {
 
       {/* Topic Selection */}
       <div className="w-full space-y-2">
-        <h2 className="text-lg font-semibold text-gray-200">Topic</h2>
+        <h2 className="text-lg font-semibold text-[#1A1A2E]">Topic</h2>
         <div className="grid grid-cols-3 gap-2">
           <button
             onClick={() => setSelectedTopicIndex(-1)}
             className={`px-3 py-2 rounded-lg text-sm transition-colors ${
               selectedTopicIndex === -1
-                ? "bg-gold text-black"
-                : "bg-gray-800 text-gray-400 border border-gray-700 hover:border-gray-500"
+                ? "bg-gold text-white"
+                : "bg-[#F7F7F8] text-[#6B7280] border border-[#E5E7EB] hover:border-[#B8860B]"
             }`}
           >
             🎲 Random
@@ -149,8 +149,8 @@ export default function SetupScreen({ onStartGame }: SetupScreenProps) {
               onClick={() => setSelectedTopicIndex(i)}
               className={`px-3 py-2 rounded-lg text-sm transition-colors ${
                 selectedTopicIndex === i
-                  ? "bg-gold text-black"
-                  : "bg-gray-800 text-gray-400 border border-gray-700 hover:border-gray-500"
+                  ? "bg-gold text-white"
+                  : "bg-[#F7F7F8] text-[#6B7280] border border-[#E5E7EB] hover:border-[#B8860B]"
               }`}
             >
               {topic.emoji} {topic.name}
@@ -160,13 +160,13 @@ export default function SetupScreen({ onStartGame }: SetupScreenProps) {
       </div>
 
       {error && (
-        <p className="text-red-400 text-sm text-center">{error}</p>
+        <p className="text-red-500 text-sm text-center">{error}</p>
       )}
 
       {/* Start Button */}
       <button
         onClick={handleStart}
-        className="w-full py-4 bg-gold hover:bg-gold-dark text-black font-bold text-lg rounded-xl transition-colors shadow-lg shadow-gold-dark/30"
+        className="w-full py-4 bg-gold hover:bg-gold-dark text-white font-bold text-lg rounded-xl transition-colors shadow-lg shadow-gold-dark/30"
       >
         START GAME
       </button>

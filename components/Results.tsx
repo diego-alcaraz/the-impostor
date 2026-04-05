@@ -31,21 +31,17 @@ export default function Results({
     .filter((p) => !p.eliminated)
     .sort((a, b) => b.votesReceived - a.votesReceived);
 
-  // Find who got the most votes
   const maxVotes = sortedByVotes[0]?.votesReceived || 0;
   const topVoted = sortedByVotes.filter((p) => p.votesReceived === maxVotes);
   const isTie = topVoted.length > 1;
   const eliminated = !isTie && topVoted.length === 1 ? topVoted[0] : null;
   const caughtImpostor = eliminated?.isImpostor || false;
 
-  // If an impostor was caught and hasn't guessed yet, show the guess phase
   const showGuessPhase =
     caughtImpostor && impostorGuess === null && !showFinalResults;
 
-  // Determine final outcome
   const allImpostorsCaught =
     eliminated && impostors.every((imp) => imp.id === eliminated.id);
-  // For multi-impostor: simplified — one round of voting
   const crewWins = caughtImpostor && !impostorGuessCorrect && impostorGuess !== null;
   const impostorWinsByGuess = impostorGuessCorrect === true;
   const impostorWinsByEscape = !caughtImpostor;
@@ -60,16 +56,16 @@ export default function Results({
     return (
       <div className="flex flex-col items-center gap-6 w-full max-w-md mx-auto text-center">
         <h2 className="text-2xl font-bold text-gold">🎯 Last Chance!</h2>
-        <p className="text-gray-400">
-          <span className="text-white font-semibold">{eliminated.name}</span>{" "}
+        <p className="text-[#6B7280]">
+          <span className="text-[#1A1A2E] font-semibold">{eliminated.name}</span>{" "}
           was voted out and is the impostor!
         </p>
-        <p className="text-gray-300">
+        <p className="text-[#6B7280]">
           But the impostor gets one last chance — guess the secret word to steal the win!
         </p>
 
         <div className="w-full space-y-3">
-          <div className="text-gray-500 text-sm">
+          <div className="text-[#6B7280] text-sm">
             Topic: {topic.emoji} {topic.name}
           </div>
           <input
@@ -77,7 +73,7 @@ export default function Results({
             value={guessInput}
             onChange={(e) => setGuessInput(e.target.value)}
             placeholder="Type your guess..."
-            className="w-full bg-gray-800 border-2 border-gray-700 rounded-xl px-4 py-3 text-white text-center text-lg placeholder-gray-600 focus:outline-none focus:border-gold"
+            className="w-full bg-[#F7F7F8] border-2 border-[#E5E7EB] rounded-xl px-4 py-3 text-[#1A1A2E] text-center text-lg placeholder-[#9CA3AF] focus:outline-none focus:border-gold"
             onKeyDown={(e) => e.key === "Enter" && handleGuess()}
           />
           <button
@@ -85,8 +81,8 @@ export default function Results({
             disabled={!guessInput.trim()}
             className={`w-full py-4 font-bold rounded-xl transition-colors ${
               guessInput.trim()
-                ? "bg-gold hover:bg-gold-dark text-black"
-                : "bg-gray-800 text-gray-600 cursor-not-allowed"
+                ? "bg-gold hover:bg-gold-dark text-white"
+                : "bg-[#F7F7F8] text-[#9CA3AF] cursor-not-allowed"
             }`}
           >
             Submit Guess
@@ -103,20 +99,20 @@ export default function Results({
         <div className="space-y-2">
           <div className="text-5xl">🕵️</div>
           <h2 className="text-3xl font-bold text-gold">IMPOSTOR WINS!</h2>
-          <p className="text-gray-400">
+          <p className="text-[#6B7280]">
             {eliminated?.name} guessed the word correctly:{" "}
-            <span className="text-emerald-400 font-bold">{secretWord}</span>
+            <span className="text-[#10B981] font-bold">{secretWord}</span>
           </p>
         </div>
       ) : crewWins ? (
         <div className="space-y-2">
           <div className="text-5xl">🎉</div>
-          <h2 className="text-3xl font-bold text-emerald-400">CREW WINS!</h2>
-          <p className="text-gray-400">
+          <h2 className="text-3xl font-bold text-[#10B981]">CREW WINS!</h2>
+          <p className="text-[#6B7280]">
             The impostor was caught and failed to guess the word!
           </p>
           {impostorGuess && (
-            <p className="text-gray-500 text-sm">
+            <p className="text-[#9CA3AF] text-sm">
               They guessed: &quot;{impostorGuess}&quot;
             </p>
           )}
@@ -125,7 +121,7 @@ export default function Results({
         <div className="space-y-2">
           <div className="text-5xl">🕵️</div>
           <h2 className="text-3xl font-bold text-gold">IMPOSTOR WINS!</h2>
-          <p className="text-gray-400">
+          <p className="text-[#6B7280]">
             {isTie
               ? "The vote was tied — no one was eliminated!"
               : "The crew voted out an innocent player!"}
@@ -134,35 +130,35 @@ export default function Results({
       ) : (
         <div className="space-y-2">
           <div className="text-5xl">📊</div>
-          <h2 className="text-3xl font-bold text-white">Results</h2>
+          <h2 className="text-3xl font-bold text-[#1A1A2E]">Results</h2>
         </div>
       )}
 
       {/* Secret word reveal */}
-      <div className="w-full py-4 px-6 rounded-xl bg-gray-800/50 border border-gray-700 space-y-1">
-        <div className="text-gray-500 text-sm">The secret word was:</div>
-        <div className="text-2xl font-bold text-emerald-400">{secretWord}</div>
-        <div className="text-gray-500 text-sm">
+      <div className="w-full py-4 px-6 rounded-xl bg-[#F7F7F8] border border-[#E5E7EB] space-y-1">
+        <div className="text-[#6B7280] text-sm">The secret word was:</div>
+        <div className="text-2xl font-bold text-[#10B981]">{secretWord}</div>
+        <div className="text-[#6B7280] text-sm">
           {topic.emoji} {topic.name}
         </div>
       </div>
 
       {/* Vote breakdown */}
       <div className="w-full space-y-2">
-        <h3 className="text-gray-400 text-sm font-semibold">Vote Results</h3>
+        <h3 className="text-[#6B7280] text-sm font-semibold">Vote Results</h3>
         {sortedByVotes.map((p) => (
           <div
             key={p.id}
             className={`flex items-center justify-between px-4 py-3 rounded-xl ${
               p.isImpostor
-                ? "bg-gold-dark/20 border border-gold-dark"
+                ? "bg-gold/10 border border-gold"
                 : eliminated && p.id === eliminated.id
-                ? "bg-yellow-900/20 border border-yellow-800"
-                : "bg-gray-800/50 border border-gray-700"
+                ? "bg-amber-50 border border-amber-300"
+                : "bg-[#F7F7F8] border border-[#E5E7EB]"
             }`}
           >
             <div className="flex items-center gap-3">
-              <span className="text-white font-semibold">{p.name}</span>
+              <span className="text-[#1A1A2E] font-semibold">{p.name}</span>
               {p.isImpostor && (
                 <span className="text-xs bg-gold px-2 py-0.5 rounded-full text-white">
                   IMPOSTOR
@@ -170,7 +166,7 @@ export default function Results({
               )}
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-gray-400 text-sm">
+              <span className="text-[#6B7280] text-sm">
                 {p.votesReceived} vote{p.votesReceived !== 1 ? "s" : ""}
               </span>
               <div className="flex">
@@ -186,11 +182,11 @@ export default function Results({
       </div>
 
       {/* Impostor reveal */}
-      <div className="w-full py-3 px-4 rounded-xl bg-gold-dark/10 border border-gold-dark/30">
-        <div className="text-gray-500 text-sm mb-1">
+      <div className="w-full py-3 px-4 rounded-xl bg-gold/10 border border-gold/30">
+        <div className="text-[#6B7280] text-sm mb-1">
           {impostors.length === 1 ? "The impostor was:" : "The impostors were:"}
         </div>
-        <div className="text-gold font-bold text-lg">
+        <div className="text-gold-dark font-bold text-lg">
           {impostors.map((p) => p.name).join(", ")}
         </div>
       </div>
@@ -198,7 +194,7 @@ export default function Results({
       {/* Play Again */}
       <button
         onClick={onPlayAgain}
-        className="w-full py-4 bg-gold hover:bg-gold-dark text-black font-bold text-lg rounded-xl transition-colors shadow-lg shadow-gold-dark/30"
+        className="w-full py-4 bg-gold hover:bg-gold-dark text-white font-bold text-lg rounded-xl transition-colors shadow-lg shadow-gold-dark/30"
       >
         🔄 Play Again
       </button>

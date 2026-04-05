@@ -43,19 +43,19 @@ export default function MLVoting({
 
   return (
     <div className="flex flex-col items-center gap-6 w-full max-w-md mx-auto text-center">
-      <div className="text-gray-500 text-sm">
+      <div className="text-[#6B7280] text-sm">
         Round {currentRound + 1} of {totalRounds}
       </div>
 
       {/* Prompt */}
       <div className="w-full py-6 px-6 rounded-2xl border-2 border-gold/30 bg-gold/5">
-        <p className="text-2xl font-bold text-gold">{prompt}</p>
+        <p className="text-2xl font-bold text-gold-dark">{prompt}</p>
       </div>
 
       {!confirmed ? (
         <>
-          <div className="text-gray-400">
-            <span className="text-white font-semibold">{currentVoter.name}</span>,
+          <div className="text-[#6B7280]">
+            <span className="text-[#1A1A2E] font-semibold">{currentVoter.name}</span>,
             who do you pick?
           </div>
 
@@ -66,13 +66,13 @@ export default function MLVoting({
                 onClick={() => setSelectedTarget(p.id)}
                 className={`w-full py-3 px-4 rounded-xl text-left transition-colors ${
                   selectedTarget === p.id
-                    ? "bg-gold/20 border-2 border-gold text-white"
-                    : "bg-gray-800 border-2 border-gray-700 text-gray-300 hover:border-gray-500"
+                    ? "bg-gold/20 border-2 border-gold text-[#1A1A2E]"
+                    : "bg-[#F7F7F8] border-2 border-[#E5E7EB] text-[#1A1A2E] hover:border-[#B8860B]"
                 }`}
               >
                 {p.name}
                 {p.id === currentVoter.id && (
-                  <span className="text-gray-600 text-sm ml-2">(you)</span>
+                  <span className="text-[#9CA3AF] text-sm ml-2">(you)</span>
                 )}
               </button>
             ))}
@@ -83,8 +83,8 @@ export default function MLVoting({
             disabled={selectedTarget === null}
             className={`w-full py-4 font-bold rounded-xl transition-colors ${
               selectedTarget !== null
-                ? "bg-gold hover:bg-gold-dark text-black"
-                : "bg-gray-800 text-gray-600 cursor-not-allowed"
+                ? "bg-gold hover:bg-gold-dark text-white"
+                : "bg-[#F7F7F8] text-[#9CA3AF] cursor-not-allowed"
             }`}
           >
             Confirm Vote
@@ -92,19 +92,19 @@ export default function MLVoting({
         </>
       ) : (
         <>
-          <p className="text-gray-400">
-            <span className="text-white font-semibold">{currentVoter.name}</span>{" "}
+          <p className="text-[#6B7280]">
+            <span className="text-[#1A1A2E] font-semibold">{currentVoter.name}</span>{" "}
             voted for{" "}
             <span className="text-gold font-semibold">
               {players.find((p) => p.id === selectedTarget)?.name}
             </span>
           </p>
-          <p className="text-gray-600 text-sm">
+          <p className="text-[#9CA3AF] text-sm">
             Pass the device to the next player.
           </p>
           <button
             onClick={handleNext}
-            className="w-full py-4 bg-gold hover:bg-gold-dark text-black font-bold rounded-xl transition-colors"
+            className="w-full py-4 bg-gold hover:bg-gold-dark text-white font-bold rounded-xl transition-colors"
           >
             {isLast ? "📊 See Results" : "Next Voter →"}
           </button>
@@ -120,8 +120,8 @@ export default function MLVoting({
               i < currentVoterIndex
                 ? "bg-gold"
                 : i === currentVoterIndex
-                ? "bg-white"
-                : "bg-gray-700"
+                ? "bg-[#1A1A2E]"
+                : "bg-[#E5E7EB]"
             }`}
           />
         ))}
