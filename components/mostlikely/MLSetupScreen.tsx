@@ -1,20 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import { topics, Topic } from "@/lib/topics";
 
-interface SetupScreenProps {
-  onStartGame: (
-    playerNames: string[],
-    impostorCount: number,
-    topic?: Topic
-  ) => void;
+interface MLSetupScreenProps {
+  onStartGame: (playerNames: string[], totalRounds: number) => void;
 }
 
-export default function SetupScreen({ onStartGame }: SetupScreenProps) {
-  const [playerNames, setPlayerNames] = useState<string[]>(["", "", ""]);
-  const [impostorCount, setImpostorCount] = useState(1);
-  const [selectedTopicIndex, setSelectedTopicIndex] = useState<number>(-1);
+export default function MLSetupScreen({ onStartGame }: MLSetupScreenProps) {
+  const [playerNames, setPlayerNames] = useState<string[]>(
+    Array(10).fill("")
+  );
+  const [totalRounds, setTotalRounds] = useState(10);
   const [error, setError] = useState("");
 
   const addPlayer = () => {
@@ -26,9 +22,6 @@ export default function SetupScreen({ onStartGame }: SetupScreenProps) {
   const removePlayer = (index: number) => {
     if (playerNames.length > 3) {
       setPlayerNames(playerNames.filter((_, i) => i !== index));
-      if (impostorCount >= playerNames.length - 1) {
-        setImpostorCount(Math.max(1, playerNames.length - 2));
-      }
     }
   };
 
@@ -37,8 +30,6 @@ export default function SetupScreen({ onStartGame }: SetupScreenProps) {
     updated[index] = name;
     setPlayerNames(updated);
   };
-
-  const maxImpostors = Math.floor(playerNames.length / 2);
 
   const handleStart = () => {
     const trimmed = playerNames.map((n) => n.trim());
@@ -50,24 +41,20 @@ export default function SetupScreen({ onStartGame }: SetupScreenProps) {
       setError("Player names must be unique.");
       return;
     }
-    if (impostorCount >= trimmed.length) {
-      setError("There must be more regular players than impostors.");
-      return;
-    }
     setError("");
-    const topic =
-      selectedTopicIndex >= 0 ? topics[selectedTopicIndex] : undefined;
-    onStartGame(trimmed, impostorCount, topic);
+    onStartGame(trimmed, totalRounds);
   };
+
+  const roundOptions = [5, 10, 15, 20];
 
   return (
     <div className="flex flex-col items-center gap-6 w-full max-w-lg mx-auto">
       <div className="text-center">
-        <h1 className="text-4xl font-bold text-gold mb-2 tracking-wider">
-          THE IMPOSTOR
+        <h1 className="text-4xl font-bold text-gold-light mb-2 tracking-wider">
+          MOST LIKELY TO...
         </h1>
         <p className="text-gray-400 text-sm">
-          Find the impostor among you... or bluff your way out.
+          Vote for who fits each prompt best. The most voted player scores!
         </p>
       </div>
 
@@ -107,18 +94,16 @@ export default function SetupScreen({ onStartGame }: SetupScreenProps) {
         )}
       </div>
 
-      {/* Impostor Count */}
+      {/* Rounds */}
       <div className="w-full space-y-2">
-        <h2 className="text-lg font-semibold text-gray-200">
-          Number of Impostors
-        </h2>
-        <div className="flex gap-2 flex-wrap">
-          {Array.from({ length: maxImpostors }, (_, i) => i + 1).map((n) => (
+        <h2 className="text-lg font-semibold text-gray-200">Rounds</h2>
+        <div className="flex gap-2">
+          {roundOptions.map((n) => (
             <button
               key={n}
-              onClick={() => setImpostorCount(n)}
-              className={`w-12 h-12 rounded-lg font-bold transition-colors ${
-                impostorCount === n
+              onClick={() => setTotalRounds(n)}
+              className={`flex-1 py-3 rounded-lg font-bold transition-colors ${
+                totalRounds === n
                   ? "bg-gold text-black"
                   : "bg-gray-800 text-gray-400 border border-gray-700 hover:border-gray-500"
               }`}
@@ -129,41 +114,8 @@ export default function SetupScreen({ onStartGame }: SetupScreenProps) {
         </div>
       </div>
 
-      {/* Topic Selection */}
-      <div className="w-full space-y-2">
-        <h2 className="text-lg font-semibold text-gray-200">Topic</h2>
-        <div className="grid grid-cols-3 gap-2">
-          <button
-            onClick={() => setSelectedTopicIndex(-1)}
-            className={`px-3 py-2 rounded-lg text-sm transition-colors ${
-              selectedTopicIndex === -1
-                ? "bg-gold text-black"
-                : "bg-gray-800 text-gray-400 border border-gray-700 hover:border-gray-500"
-            }`}
-          >
-            🎲 Random
-          </button>
-          {topics.map((topic, i) => (
-            <button
-              key={i}
-              onClick={() => setSelectedTopicIndex(i)}
-              className={`px-3 py-2 rounded-lg text-sm transition-colors ${
-                selectedTopicIndex === i
-                  ? "bg-gold text-black"
-                  : "bg-gray-800 text-gray-400 border border-gray-700 hover:border-gray-500"
-              }`}
-            >
-              {topic.emoji} {topic.name}
-            </button>
-          ))}
-        </div>
-      </div>
+      {error && <p className="text-red-400 text-sm text-center">{error}</p>}
 
-      {error && (
-        <p className="text-red-400 text-sm text-center">{error}</p>
-      )}
-
-      {/* Start Button */}
       <button
         onClick={handleStart}
         className="w-full py-4 bg-gold hover:bg-gold-dark text-black font-bold text-lg rounded-xl transition-colors shadow-lg shadow-gold-dark/30"

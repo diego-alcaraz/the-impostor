@@ -13,9 +13,16 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "The Impostor — Word Game",
+  title: "La Montaña — Party Games",
   description:
-    "A social deduction word game. Find the impostor among you... or bluff your way out!",
+    "Party games by La Montaña. Pass the device, play with friends!",
+  icons: {
+    icon: [
+      { url: "/the-impostor/favicon-32.png", sizes: "32x32", type: "image/png" },
+      { url: "/the-impostor/favicon-16.png", sizes: "16x16", type: "image/png" },
+    ],
+    apple: "/the-impostor/logo-180.png",
+  },
 };
 
 export default function RootLayout({
@@ -28,7 +35,7 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-[#0a0a0a] text-[#ededed]">
+      <body className="min-h-full flex flex-col bg-[#1A1A2E] text-[#ededed]">
         {children}
       </body>
     </html>

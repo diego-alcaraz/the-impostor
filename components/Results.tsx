@@ -59,7 +59,7 @@ export default function Results({
   if (showGuessPhase && eliminated) {
     return (
       <div className="flex flex-col items-center gap-6 w-full max-w-md mx-auto text-center">
-        <h2 className="text-2xl font-bold text-red-500">🎯 Last Chance!</h2>
+        <h2 className="text-2xl font-bold text-gold">🎯 Last Chance!</h2>
         <p className="text-gray-400">
           <span className="text-white font-semibold">{eliminated.name}</span>{" "}
           was voted out and is the impostor!
@@ -77,7 +77,7 @@ export default function Results({
             value={guessInput}
             onChange={(e) => setGuessInput(e.target.value)}
             placeholder="Type your guess..."
-            className="w-full bg-gray-800 border-2 border-gray-700 rounded-xl px-4 py-3 text-white text-center text-lg placeholder-gray-600 focus:outline-none focus:border-red-500"
+            className="w-full bg-gray-800 border-2 border-gray-700 rounded-xl px-4 py-3 text-white text-center text-lg placeholder-gray-600 focus:outline-none focus:border-gold"
             onKeyDown={(e) => e.key === "Enter" && handleGuess()}
           />
           <button
@@ -85,7 +85,7 @@ export default function Results({
             disabled={!guessInput.trim()}
             className={`w-full py-4 font-bold rounded-xl transition-colors ${
               guessInput.trim()
-                ? "bg-red-600 hover:bg-red-700 text-white"
+                ? "bg-gold hover:bg-gold-dark text-black"
                 : "bg-gray-800 text-gray-600 cursor-not-allowed"
             }`}
           >
@@ -102,7 +102,7 @@ export default function Results({
       {impostorWinsByGuess ? (
         <div className="space-y-2">
           <div className="text-5xl">🕵️</div>
-          <h2 className="text-3xl font-bold text-red-500">IMPOSTOR WINS!</h2>
+          <h2 className="text-3xl font-bold text-gold">IMPOSTOR WINS!</h2>
           <p className="text-gray-400">
             {eliminated?.name} guessed the word correctly:{" "}
             <span className="text-emerald-400 font-bold">{secretWord}</span>
@@ -124,7 +124,7 @@ export default function Results({
       ) : impostorWinsByEscape ? (
         <div className="space-y-2">
           <div className="text-5xl">🕵️</div>
-          <h2 className="text-3xl font-bold text-red-500">IMPOSTOR WINS!</h2>
+          <h2 className="text-3xl font-bold text-gold">IMPOSTOR WINS!</h2>
           <p className="text-gray-400">
             {isTie
               ? "The vote was tied — no one was eliminated!"
@@ -155,7 +155,7 @@ export default function Results({
             key={p.id}
             className={`flex items-center justify-between px-4 py-3 rounded-xl ${
               p.isImpostor
-                ? "bg-red-900/20 border border-red-800"
+                ? "bg-gold-dark/20 border border-gold-dark"
                 : eliminated && p.id === eliminated.id
                 ? "bg-yellow-900/20 border border-yellow-800"
                 : "bg-gray-800/50 border border-gray-700"
@@ -164,7 +164,7 @@ export default function Results({
             <div className="flex items-center gap-3">
               <span className="text-white font-semibold">{p.name}</span>
               {p.isImpostor && (
-                <span className="text-xs bg-red-600 px-2 py-0.5 rounded-full text-white">
+                <span className="text-xs bg-gold px-2 py-0.5 rounded-full text-white">
                   IMPOSTOR
                 </span>
               )}
@@ -175,7 +175,7 @@ export default function Results({
               </span>
               <div className="flex">
                 {Array.from({ length: p.votesReceived }).map((_, i) => (
-                  <span key={i} className="text-red-500 text-sm">
+                  <span key={i} className="text-gold text-sm">
                     ●
                   </span>
                 ))}
@@ -186,11 +186,11 @@ export default function Results({
       </div>
 
       {/* Impostor reveal */}
-      <div className="w-full py-3 px-4 rounded-xl bg-red-900/10 border border-red-900/30">
+      <div className="w-full py-3 px-4 rounded-xl bg-gold-dark/10 border border-gold-dark/30">
         <div className="text-gray-500 text-sm mb-1">
           {impostors.length === 1 ? "The impostor was:" : "The impostors were:"}
         </div>
-        <div className="text-red-400 font-bold text-lg">
+        <div className="text-gold font-bold text-lg">
           {impostors.map((p) => p.name).join(", ")}
         </div>
       </div>
@@ -198,7 +198,7 @@ export default function Results({
       {/* Play Again */}
       <button
         onClick={onPlayAgain}
-        className="w-full py-4 bg-red-600 hover:bg-red-700 text-white font-bold text-lg rounded-xl transition-colors shadow-lg shadow-red-900/30"
+        className="w-full py-4 bg-gold hover:bg-gold-dark text-black font-bold text-lg rounded-xl transition-colors shadow-lg shadow-gold-dark/30"
       >
         🔄 Play Again
       </button>

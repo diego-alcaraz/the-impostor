@@ -74,9 +74,9 @@ export default function DiscussionPhase({
           <div
             className={`text-5xl font-mono font-bold ${
               timerSeconds <= 5 && timerRunning
-                ? "text-red-500 animate-pulse"
+                ? "text-gold animate-pulse"
                 : timerSeconds === 0
-                ? "text-red-500"
+                ? "text-gold"
                 : "text-white"
             }`}
           >
@@ -123,7 +123,7 @@ export default function DiscussionPhase({
                 i < currentTurn
                   ? "bg-gray-800 text-gray-600 line-through"
                   : i === currentTurn
-                  ? "bg-red-600/20 text-red-400 border border-red-600"
+                  ? "bg-gold/20 text-gold border border-gold"
                   : "bg-gray-800 text-gray-400"
               }`}
             >
@@ -145,7 +145,7 @@ export default function DiscussionPhase({
 
       <button
         onClick={onStartVoting}
-        className="w-full py-4 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl transition-colors shadow-lg shadow-red-900/30"
+        className="w-full py-4 bg-gold hover:bg-gold-dark text-black font-bold rounded-xl transition-colors shadow-lg shadow-gold-dark/30"
       >
         🗳️ Start Voting
       </button>

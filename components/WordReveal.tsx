@@ -49,7 +49,7 @@ export default function WordReveal({
           </p>
           <button
             onClick={handleReveal}
-            className="w-full py-6 bg-gray-800 border-2 border-gray-600 hover:border-red-500 rounded-2xl text-gray-300 hover:text-white text-lg transition-colors"
+            className="w-full py-6 bg-gray-800 border-2 border-gray-600 hover:border-gold rounded-2xl text-gray-300 hover:text-white text-lg transition-colors"
           >
             👁️ Tap to reveal your word
           </button>
@@ -63,7 +63,7 @@ export default function WordReveal({
             {player.isImpostor ? (
               <div className="space-y-2">
                 <div className="text-5xl">🕵️</div>
-                <div className="text-red-500 text-2xl font-bold">
+                <div className="text-gold text-2xl font-bold">
                   YOU ARE THE IMPOSTOR
                 </div>
                 <p className="text-gray-500 text-sm">
@@ -82,7 +82,7 @@ export default function WordReveal({
 
           <button
             onClick={handleNext}
-            className="w-full py-4 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl transition-colors"
+            className="w-full py-4 bg-gold hover:bg-gold-dark text-black font-bold rounded-xl transition-colors"
           >
             {isLast ? "🚀 Start Discussion" : "✓ Got it — Next Player"}
           </button>
@@ -98,7 +98,7 @@ export default function WordReveal({
               i < currentPlayerIndex
                 ? "bg-emerald-500"
                 : i === currentPlayerIndex
-                ? "bg-red-500"
+                ? "bg-gold"
                 : "bg-gray-700"
             }`}
           />

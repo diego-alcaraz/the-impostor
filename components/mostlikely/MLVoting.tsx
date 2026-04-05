@@ -1,75 +1,85 @@
 "use client";
 
 import { useState } from "react";
-import { Player } from "@/lib/gameState";
+import { MLPlayer } from "@/lib/mostLikelyState";
 
-interface VotingPhaseProps {
-  players: Player[];
-  onSubmitVotes: (votes: Map<number, number>) => void;
+interface MLVotingProps {
+  players: MLPlayer[];
+  prompt: string;
+  currentRound: number;
+  totalRounds: number;
+  currentVoterIndex: number;
+  onVote: (voterId: number, targetId: number) => void;
+  onAllVoted: () => void;
 }
 
-export default function VotingPhase({ players, onSubmitVotes }: VotingPhaseProps) {
-  const activePlayers = players.filter((p) => !p.eliminated);
-  const [currentVoterIndex, setCurrentVoterIndex] = useState(0);
-  const [votes, setVotes] = useState<Map<number, number>>(new Map());
+export default function MLVoting({
+  players,
+  prompt,
+  currentRound,
+  totalRounds,
+  currentVoterIndex,
+  onVote,
+  onAllVoted,
+}: MLVotingProps) {
   const [selectedTarget, setSelectedTarget] = useState<number | null>(null);
   const [confirmed, setConfirmed] = useState(false);
+  const currentVoter = players[currentVoterIndex];
+  const isLast = currentVoterIndex === players.length - 1;
 
-  const currentVoter = activePlayers[currentVoterIndex];
-  const isLast = currentVoterIndex === activePlayers.length - 1;
-
-  const handleConfirmVote = () => {
+  const handleConfirm = () => {
     if (selectedTarget === null) return;
-    const newVotes = new Map(votes);
-    newVotes.set(currentVoter.id, selectedTarget);
-    setVotes(newVotes);
+    onVote(currentVoter.id, selectedTarget);
     setConfirmed(true);
   };
 
   const handleNext = () => {
+    setSelectedTarget(null);
+    setConfirmed(false);
     if (isLast) {
-      onSubmitVotes(votes);
-    } else {
-      setCurrentVoterIndex(currentVoterIndex + 1);
-      setSelectedTarget(null);
-      setConfirmed(false);
+      onAllVoted();
     }
   };
 
   return (
     <div className="flex flex-col items-center gap-6 w-full max-w-md mx-auto text-center">
-      <h2 className="text-2xl font-bold text-gold">🗳️ Voting</h2>
       <div className="text-gray-500 text-sm">
-        Voter {currentVoterIndex + 1} of {activePlayers.length}
+        Round {currentRound + 1} of {totalRounds}
+      </div>
+
+      {/* Prompt */}
+      <div className="w-full py-6 px-6 rounded-2xl border-2 border-gold/30 bg-gold/5">
+        <p className="text-2xl font-bold text-gold">{prompt}</p>
       </div>
 
       {!confirmed ? (
         <>
-          <p className="text-gray-400">
+          <div className="text-gray-400">
             <span className="text-white font-semibold">{currentVoter.name}</span>,
-            who do you think is the impostor?
-          </p>
+            who do you pick?
+          </div>
 
           <div className="w-full space-y-2">
-            {activePlayers
-              .filter((p) => p.id !== currentVoter.id)
-              .map((p) => (
-                <button
-                  key={p.id}
-                  onClick={() => setSelectedTarget(p.id)}
-                  className={`w-full py-3 px-4 rounded-xl text-left transition-colors ${
-                    selectedTarget === p.id
-                      ? "bg-gold/20 border-2 border-gold text-white"
-                      : "bg-gray-800 border-2 border-gray-700 text-gray-300 hover:border-gray-500"
-                  }`}
-                >
-                  {p.name}
-                </button>
-              ))}
+            {players.map((p) => (
+              <button
+                key={p.id}
+                onClick={() => setSelectedTarget(p.id)}
+                className={`w-full py-3 px-4 rounded-xl text-left transition-colors ${
+                  selectedTarget === p.id
+                    ? "bg-gold/20 border-2 border-gold text-white"
+                    : "bg-gray-800 border-2 border-gray-700 text-gray-300 hover:border-gray-500"
+                }`}
+              >
+                {p.name}
+                {p.id === currentVoter.id && (
+                  <span className="text-gray-600 text-sm ml-2">(you)</span>
+                )}
+              </button>
+            ))}
           </div>
 
           <button
-            onClick={handleConfirmVote}
+            onClick={handleConfirm}
             disabled={selectedTarget === null}
             className={`w-full py-4 font-bold rounded-xl transition-colors ${
               selectedTarget !== null
@@ -89,7 +99,9 @@ export default function VotingPhase({ players, onSubmitVotes }: VotingPhaseProps
               {players.find((p) => p.id === selectedTarget)?.name}
             </span>
           </p>
-          <p className="text-gray-600 text-sm">Pass the device to the next player.</p>
+          <p className="text-gray-600 text-sm">
+            Pass the device to the next player.
+          </p>
           <button
             onClick={handleNext}
             className="w-full py-4 bg-gold hover:bg-gold-dark text-black font-bold rounded-xl transition-colors"
@@ -101,7 +113,7 @@ export default function VotingPhase({ players, onSubmitVotes }: VotingPhaseProps
 
       {/* Progress dots */}
       <div className="flex gap-1.5 mt-2">
-        {activePlayers.map((_, i) => (
+        {players.map((_, i) => (
           <div
             key={i}
             className={`w-2.5 h-2.5 rounded-full transition-colors ${
